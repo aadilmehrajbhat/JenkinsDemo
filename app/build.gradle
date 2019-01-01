@@ -1,21 +1,46 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.example.aadilmehraj.jenkinsdemo"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode VERSION_CODE.toInteger()
+        versionName VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-release-rules.pro'
+        }
+
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-debug-rules.pro'
         }
     }
+    signingConfigs {
+        config
+    }
+}
+
+// set the keystore if we set the path
+if (KEYSTORE != "") {
+
+    // initialize the signing
+    android.signingConfigs.config.storeFile = file('../keystore/' + KEYSTORE)
+    android.signingConfigs.config.storePassword = STORE_PASSWORD
+    android.signingConfigs.config.keyAlias = KEY_ALIAS
+    android.signingConfigs.config.keyPassword = KEY_PASSWORD
+
+    // set this signing for both build types
+    android.buildTypes.release.signingConfig = android.signingConfigs.config
+    android.buildTypes.debug.signingConfig = android.signingConfigs.config
+
 }
 
 dependencies {
