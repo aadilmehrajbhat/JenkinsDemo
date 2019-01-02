@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">JenkinsDemo</string>
     <string name="hello_jenkins">Hello Jenkins!</string>
+    <string name="click_me">Click Me!</string>
 </resources>
