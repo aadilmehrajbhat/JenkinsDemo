@@ -10,7 +10,9 @@ android {
         versionName VERSION_NAME
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
+
         release {
             minifyEnabled true
             shrinkResources true
@@ -23,8 +25,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-debug-rules.pro'
         }
     }
+
     signingConfigs {
         config
+    }
+
+    lintOptions {
+        abortOnError false
+        lintConfig file("../lint.xml")
     }
 }
 
